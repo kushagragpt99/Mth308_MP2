@@ -9,7 +9,7 @@ f = @(x) f(x); % function description for f, e.g., f = @(x) x.*x
 nGrid = nGridValue; % size of the grid to be used for approximation
 [xGrid, fGrid] = discreteData(nGrid, a, b, f);
 % the number of test evaluation points
-nEval = nEvalValue;
+nEval = nEvalValu;
 xEval = a + (b-a).*rand(1,nEval); % evaluation grid to be used for testing
 tic;
 exact = f(xEval);
