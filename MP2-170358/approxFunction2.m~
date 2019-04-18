@@ -1,0 +1,37 @@
+function approx = approxFunction2(xEval, xGrid, fGrid)
+n=size(xGrid,2);
+a=xGrid(1,1);
+b=xGrid(1,n); %%possible error
+xGrid = xGrid(1,2:(n-1));
+fGrid=fGrid(1,2:(n-1));
+w=computeweights(xGrid,fGrid,a,b);
+approx=findf(w,xEval,a,b);
+function w= computeweights(xGrid, fGrid,a,b)
+n=size(xGrid,2)
+T=zeros(n);
+w=zeros(1,n);
+for i=1:n
+    T(1:n,i)=cos((0:n-1).*acos((2*xGrid(1,i)-a-b)/(b-a))).*fGrid(1,i);
+end
+for i=1:n
+    if i==1
+        w(1,1)=sum(T(1,1:n))/n;
+    else
+        w(1,i)=2*sum(T(i,1:n))/n;
+    end
+end
+function f=findf(w,xEval,a,b)
+n=size(w,2);
+m=size(xEval,2);
+T=zeros(n,m);
+f=zeros(1,m);
+for i=1:m
+    T(1:n,i)=cos((0:n-1).*acos((2*xEval(1,i)-a-b)/(b-a)));
+%     disp(size(T(1:n,3)));
+%     disp(size(w));
+    T(1:n,i)=T(1:n,i).*w;
+    f(1,i)=sum(T(1:n,i));
+end
+end
+
+end
